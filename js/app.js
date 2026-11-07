@@ -128,6 +128,31 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  const menuToggleBtn = document.getElementById("menu-toggle");
+  const mainNavigation = document.getElementById("main-navigation");
+
+  function closeMenu() {
+    if (!menuToggleBtn || !mainNavigation) return;
+    menuToggleBtn.setAttribute("aria-expanded", "false");
+    mainNavigation.classList.add("hidden");
+  }
+
+  if (menuToggleBtn && mainNavigation) {
+    menuToggleBtn.addEventListener("click", () => {
+      const isOpen = menuToggleBtn.getAttribute("aria-expanded") === "true";
+      menuToggleBtn.setAttribute("aria-expanded", String(!isOpen));
+      mainNavigation.classList.toggle("hidden", isOpen);
+    });
+
+    mainNavigation.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeMenu();
+    });
+  }
+
   // 02. Accessible Modal
   new ModalManager();
 

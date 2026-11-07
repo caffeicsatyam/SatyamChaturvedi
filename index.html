@@ -10,39 +10,50 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <script>
+    tailwind = {
+      config: {
+        theme: {
+          extend: {
+            screens: { xs: "420px" }
+          }
+        }
+      }
+    };
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
   <header class="site-header" role="banner">
     <div class="container">
-      <div class="nav-bar">
+      <div class="nav-bar flex-wrap md:flex-nowrap">
         <a href="#me" class="brand-link">
           <span class="brand-dot" aria-hidden="true"></span>
           <span>Satyam Chaturvedi</span>
         </a>
-        <nav class="site-nav" role="navigation" aria-label="Main Navigation">
-          <ul class="nav-links">
+        <div class="ml-auto flex items-center gap-2 md:order-3 md:ml-0">
+          <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch theme">Theme</button>
+          <button type="button" class="min-h-11 rounded-full border border-[var(--border-strong)] bg-[var(--bg-card)] px-4 text-sm font-semibold text-[var(--text-primary)] transition-colors hover:border-[var(--accent-vivid)] hover:text-[var(--accent-vivid)] md:hidden" id="menu-toggle" aria-controls="main-navigation" aria-expanded="false">Menu</button>
+        </div>
+        <nav id="main-navigation" class="site-nav hidden w-full basis-full pt-2 md:order-2 md:block md:w-auto md:basis-auto md:pt-0" role="navigation" aria-label="Main navigation">
+          <ul class="nav-links flex-col rounded-2xl border border-[var(--border-hairline)] bg-[var(--bg-card)] p-1.5 sm:flex-row sm:rounded-full md:border-0 md:bg-transparent md:p-0">
             <li><a href="#me" class="nav-link">Me</a></li>
             <li><a href="#what-i-do" class="nav-link">What I Do</a></li>
             <li><a href="#work" class="nav-link">Projects</a></li>
             <li><a href="#contact" class="nav-link">Contact</a></li>
           </ul>
         </nav>
-        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch theme">Theme</button>
       </div>
     </div>
   </header>
 
   <main role="main">
-    <!-- 01. ME (Identity + Navbar-Wide Portrait + Engineering Metrics) -->
-    <section id="me" class="section hero" aria-labelledby="hero-title">
-      <div class="container">
-        <div class="hero-intro">
-          <div class="status-pill">
-            <span class="status-dot" aria-hidden="true"></span>
-            <span>Satyam Chaturvedi &bull; Software Engineer &bull; Delhi, India</span>
-          </div>
-          <h1 id="hero-title" class="hero-title">
-            Designing <span class="highlight">reliable software</span> and agentic architectures that scale.
+    <!-- 01. ME (Portrait-led identity and engineering metrics) -->
+    <section id="me" class="section hero relative isolate overflow-hidden" aria-labelledby="hero-title">
+      <div class="container relative z-10">
+        <div class="hero-intro max-w-4xl">
+          <h1 id="hero-title" class="hero-title max-w-none text-[clamp(2.75rem,7vw,6rem)] leading-[0.98] md:max-w-[16ch]">
+            <span class="hero-title-photo">Designing reliable software</span> and agentic architectures that scale.
           </h1>
           <p class="hero-summary">
             I'm Satyam, a final-year B.Tech (CSE) student and Software Engineer focused on scalable web backends, distributed data pipelines, and applied AI systems. With 1,000+ algorithmic problems solved and hands-on experience engineering production systems serving 50K+ users, I turn complex specifications into durable software.
@@ -52,25 +63,6 @@
             <a href="#what-i-do" class="btn btn-secondary">See What I Do</a>
           </div>
         </div>
-
-        <!-- Wide Portrait Container (Exact width of Navbar above) -->
-        <figure class="hero-portrait-wide">
-          <img
-            src="assets/profile-wide.jpg"
-            alt="Portrait of Satyam Chaturvedi on a terrace overlooking open landscape"
-            class="hero-portrait-img"
-            width="1120"
-            height="480"
-            fetchpriority="high"
-          >
-          <figcaption class="portrait-badge">
-            <div>
-              <div class="portrait-badge-name">Satyam Chaturvedi (@caffeicsatyam)</div>
-              <div class="portrait-badge-role">Software Engineering &middot; Full-Stack Backends &middot; Applied AI &amp; MLOps</div>
-            </div>
-            <span class="mono-meta" style="color: var(--accent-vivid);">01 / Identity</span>
-          </figcaption>
-        </figure>
 
         <!-- Engineering Metrics Strip -->
         <div class="metrics-grid">
