@@ -1,0 +1,648 @@
+/* DESIGN.md Implementation: Cupertino Daylight Editorial */
+/*
+ * Three Dials (antislop R-568): ENERGY 2 | RHYTHM 2 | MOTION 2
+ *   ENERGY 2 (Balanced): confident editorial voice, not sterile, not overwhelming.
+ *   RHYTHM 2 (Balanced): consistent grid with deliberate breaks (flagship card, asymmetric portrait badge).
+ *   MOTION 2 (Balanced): hover transitions and subtle card lifts; no parallax or choreography.
+ */
+
+/* 01. Design Tokens */
+:root {
+  --bg-canvas: #F5F5F7;
+  --bg-card: #FFFFFF;
+  --bg-subtle: #EFEFF4;
+  --bg-nav: rgba(255, 255, 255, 0.88);
+
+  --text-primary: #1D1D1F;
+  --text-secondary: #515154;
+  --text-muted: #86868B;
+
+  --accent-vivid: #0071E3;
+  --accent-vivid-hover: #005BB5;
+  --accent-warm: #F56300;
+  --accent-emerald: #1D9E34;
+  --accent-inverse: #FFFFFF;
+
+  --border-hairline: rgba(29, 29, 31, 0.09);
+  --border-strong: rgba(29, 29, 31, 0.16);
+  --border-vivid: rgba(0, 113, 227, 0.32);
+
+  --shadow-card: 0 4px 20px rgba(29, 29, 31, 0.04), 0 1px 3px rgba(29, 29, 31, 0.03);
+  --shadow-featured: 0 0 0 4px rgba(0, 113, 227, 0.07), 0 16px 40px rgba(29, 29, 31, 0.07);
+  --shadow-hover: 0 0 0 3px rgba(0, 113, 227, 0.14), 0 14px 34px rgba(29, 29, 31, 0.08);
+
+  --radius-xl: 28px;
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-pill: 980px;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+
+  --transition: 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  --container-max: 1120px;
+}
+
+[data-theme="dark"] {
+  --bg-canvas: #000000;
+  --bg-card: #141416;
+  --bg-subtle: #1C1C1E;
+  --bg-nav: rgba(20, 20, 22, 0.88);
+
+  --text-primary: #F5F5F7;
+  --text-secondary: #A1A1A6;
+  --text-muted: #6E6E73;
+
+  --accent-vivid: #2997FF;
+  --accent-vivid-hover: #0071E3;
+  --accent-warm: #FF692E;
+  --accent-emerald: #30D158;
+  --accent-inverse: #FFFFFF;
+
+  --border-hairline: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --border-vivid: rgba(41, 151, 255, 0.4);
+
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-featured: 0 0 0 4px rgba(41, 151, 255, 0.12), 0 20px 44px rgba(0, 0, 0, 0.5);
+  --shadow-hover: 0 0 0 3px rgba(41, 151, 255, 0.25), 0 16px 36px rgba(0, 0, 0, 0.45);
+}
+
+/* 02. Reset & Base */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  letter-spacing: -0.011em;
+  -webkit-font-smoothing: antialiased;
+}
+
+a[href], button, summary, select, label[for], [role="button"], [role="tab"], [role="switch"] {
+  cursor: pointer;
+}
+button:disabled, [aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}
+
+.mono-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* 03. Layout Container (Shared by Navbar, Hero Portrait & Sections) */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* 04. Navbar: Full Container Width Pill Bar */
+.site-header {
+  position: sticky;
+  top: 1rem;
+  z-index: 50;
+  margin-top: 1rem;
+}
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background-color: var(--bg-nav);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  padding: 0.625rem 0.75rem 0.625rem 1.375rem;
+  box-shadow: var(--shadow-card);
+}
+.brand-link {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+}
+.brand-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent-vivid);
+}
+.site-nav .nav-links { display: flex; flex-wrap: wrap; gap: 0.25rem; list-style: none; }
+.nav-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 0.5rem 0.875rem;
+  border-radius: var(--radius-pill);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  transition: background-color var(--transition), color var(--transition);
+}
+.nav-link:hover, .nav-link:focus-visible {
+  color: var(--text-primary);
+  background-color: var(--bg-subtle);
+}
+.theme-toggle {
+  min-width: 44px;
+  min-height: 44px;
+  height: 44px;
+  padding: 0 0.875rem;
+  border: 1px solid var(--border-strong);
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: border-color var(--transition), transform var(--transition);
+}
+.theme-toggle:hover { border-color: var(--accent-vivid); color: var(--accent-vivid); }
+
+/* 05. Section Scaffolding */
+.section { padding: 4.5rem 0; }
+.section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  margin-bottom: 2.25rem;
+}
+.section-label {
+  color: var(--accent-vivid);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.section-title {
+  font-size: clamp(1.875rem, 3vw + 0.5rem, 2.75rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+.section-subtitle {
+  font-size: 1.0625rem;
+  color: var(--text-secondary);
+  max-width: 62ch;
+}
+
+/* 06. Act I: ME (Hero + Navbar-Wide Portrait) */
+.hero { padding-top: 3rem; padding-bottom: 4rem; }
+.hero-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  padding: 0.375rem 0.875rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow-card);
+}
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent-emerald);
+}
+.hero-title {
+  font-size: clamp(2.5rem, 5.5vw + 0.75rem, 4.5rem);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  max-width: 20ch;
+}
+.hero-title .highlight {
+  color: var(--accent-vivid);
+}
+.hero-summary {
+  font-size: clamp(1.0625rem, 0.8vw + 0.85rem, 1.25rem);
+  line-height: 1.55;
+  color: var(--text-secondary);
+  max-width: 66ch;
+  margin-bottom: 1.75rem;
+}
+.hero-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Navbar-Wide Portrait Frame */
+.hero-portrait-wide {
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  min-height: 340px;
+  max-height: 520px;
+  background-color: var(--bg-card);
+  border: 2px solid var(--border-vivid);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-featured);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  display: block;
+}
+
+.portrait-badge {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  right: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  background-color: var(--bg-nav);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+}
+.portrait-badge-name {
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+}
+.portrait-badge-role {
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+}
+
+/* Metrics Grid: Authentic Engineering Highlights */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+.metric-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+}
+.metric-value {
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  line-height: 1.1;
+  margin-bottom: 0.35rem;
+}
+.metric-label {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* 07. Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--radius-pill);
+  padding: 0.75rem 1.5rem;
+  min-height: 44px;
+  border: 1px solid transparent;
+  transition: background-color var(--transition), border-color var(--transition), color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.btn:active { transform: scale(0.98); }
+.btn.btn-primary {
+  background-color: var(--accent-vivid);
+  color: var(--accent-inverse);
+}
+.btn.btn-primary:hover {
+  background-color: var(--accent-vivid-hover);
+  box-shadow: 0 6px 20px rgba(0, 113, 227, 0.28);
+}
+.btn.btn-secondary {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+.btn.btn-secondary:hover {
+  border-color: var(--accent-vivid);
+  color: var(--accent-vivid);
+}
+
+/* 08. Act II: WHAT I DO (Capabilities Bento Grid) */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+.bento-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+.bento-card:hover {
+  border-color: var(--border-vivid);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+.bento-index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background-color: var(--bg-subtle);
+  color: var(--accent-vivid);
+  margin-bottom: 1.25rem;
+}
+.bento-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+.bento-desc {
+  font-size: 0.96875rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+  flex: 1;
+}
+.bento-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+.pill-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--radius-pill);
+  background-color: var(--bg-subtle);
+  color: var(--text-secondary);
+}
+
+/* 09. Act III: PROJECTS (Flagship + Spec Grid) */
+.flagship-card {
+  background-color: var(--bg-card);
+  border: 1.5px solid var(--border-vivid);
+  border-radius: var(--radius-xl);
+  padding: clamp(1.75rem, 3.5vw, 2.75rem);
+  box-shadow: var(--shadow-featured);
+  margin-bottom: 1.5rem;
+}
+.flagship-badge {
+  display: inline-block;
+  background-color: rgba(245, 99, 0, 0.12);
+  color: var(--accent-warm);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-pill);
+  margin-bottom: 1rem;
+}
+.project-title {
+  font-size: clamp(1.5rem, 2.2vw + 0.5rem, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+.project-desc {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 68ch;
+  margin-bottom: 1.25rem;
+}
+.project-tech {
+  color: var(--accent-vivid);
+  margin-bottom: 1.5rem;
+  display: block;
+}
+.project-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+.project-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+.project-card:hover {
+  border-color: var(--border-vivid);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+.project-category {
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.project-card .project-title {
+  font-size: 1.375rem;
+}
+.project-card .project-desc {
+  font-size: 0.96875rem;
+  flex: 1;
+}
+
+/* 10. Contact Card */
+.contact-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-xl);
+  padding: clamp(2rem, 4vw, 3rem);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.contact-summary {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 60ch;
+  margin-bottom: 1.75rem;
+}
+.contact-links {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* 11. Footer */
+.site-footer {
+  padding: 2.5rem 0 3.5rem;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-hairline);
+}
+.footer-copy { color: var(--text-primary); font-weight: 600; }
+
+/* 12. Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background-color: rgba(29, 29, 31, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+}
+.modal-overlay.open { display: flex; }
+.modal-dialog {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-featured);
+  max-width: 640px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: clamp(1.75rem, 3.5vw, 2.5rem);
+  position: relative;
+}
+.modal-close-btn {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  border: 1px solid var(--border-strong);
+  background-color: var(--bg-subtle);
+  color: var(--text-primary);
+  border-radius: 50%;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.modal-close-btn:hover { border-color: var(--accent-vivid); color: var(--accent-vivid); }
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  padding-right: 3rem;
+}
+.modal-desc {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+}
+.modal-tech, .modal-highlights { margin-bottom: 1.25rem; }
+.modal-tech-label, .modal-highlights-label {
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+#modal-tech { color: var(--accent-vivid); }
+.modal-highlights ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.modal-highlights ul li {
+  font-size: 0.96875rem;
+  color: var(--text-secondary);
+  padding-left: 1.25rem;
+  position: relative;
+}
+.modal-highlights ul li::before {
+  content: "•";
+  color: var(--accent-vivid);
+  font-weight: 700;
+  position: absolute;
+  left: 0;
+}
+.modal-actions { display: flex; gap: 0.75rem; margin-top: 1.25rem; }
+
+/* 13. Responsive */
+@media (max-width: 900px) {
+  .bento-grid, .project-grid { grid-template-columns: 1fr; }
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-portrait-wide { aspect-ratio: 16 / 10; min-height: 280px; }
+}
+@media (max-width: 680px) {
+  .hero-actions, .project-actions, .contact-links { flex-direction: column; width: 100%; }
+  .btn { width: 100%; }
+}
+@media (max-width: 520px) {
+  .metrics-grid { grid-template-columns: 1fr; }
+}
+
+/* 14. Focus Accessibility */
+:focus-visible { outline: 2px solid var(--accent-vivid); outline-offset: 3px; }

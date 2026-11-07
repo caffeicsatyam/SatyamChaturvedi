@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio of Satyam Chaturvedi (@caffeicsatyam): Software Engineer specializing in scalable full-stack backends, distributed systems, and applied AI infrastructure.">
+  <meta name="author" content="Satyam Chaturvedi">
+  <title>Satyam Chaturvedi | Software Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="container">
+      <div class="nav-bar">
+        <a href="#me" class="brand-link">
+          <span class="brand-dot" aria-hidden="true"></span>
+          <span>Satyam Chaturvedi</span>
+        </a>
+        <nav class="site-nav" role="navigation" aria-label="Main Navigation">
+          <ul class="nav-links">
+            <li><a href="#me" class="nav-link">Me</a></li>
+            <li><a href="#what-i-do" class="nav-link">What I Do</a></li>
+            <li><a href="#work" class="nav-link">Projects</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+          </ul>
+        </nav>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch theme">Theme</button>
+      </div>
+    </div>
+  </header>
+
+  <main role="main">
+    <!-- 01. ME (Identity + Navbar-Wide Portrait + Engineering Metrics) -->
+    <section id="me" class="section hero" aria-labelledby="hero-title">
+      <div class="container">
+        <div class="hero-intro">
+          <div class="status-pill">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span>Satyam Chaturvedi &bull; Software Engineer &bull; Delhi, India</span>
+          </div>
+          <h1 id="hero-title" class="hero-title">
+            Designing <span class="highlight">reliable software</span> and agentic architectures that scale.
+          </h1>
+          <p class="hero-summary">
+            I'm Satyam, a final-year B.Tech (CSE) student and Software Engineer focused on scalable web backends, distributed data pipelines, and applied AI systems. With 1,000+ algorithmic problems solved and hands-on experience engineering production systems serving 50K+ users, I turn complex specifications into durable software.
+          </p>
+          <div class="hero-actions">
+            <a href="#work" class="btn btn-primary">Explore Selected Projects</a>
+            <a href="#what-i-do" class="btn btn-secondary">See What I Do</a>
+          </div>
+        </div>
+
+        <!-- Wide Portrait Container (Exact width of Navbar above) -->
+        <figure class="hero-portrait-wide">
+          <img
+            src="assets/profile-wide.jpg"
+            alt="Portrait of Satyam Chaturvedi on a terrace overlooking open landscape"
+            class="hero-portrait-img"
+            width="1120"
+            height="480"
+            fetchpriority="high"
+          >
+          <figcaption class="portrait-badge">
+            <div>
+              <div class="portrait-badge-name">Satyam Chaturvedi (@caffeicsatyam)</div>
+              <div class="portrait-badge-role">Software Engineering &middot; Full-Stack Backends &middot; Applied AI &amp; MLOps</div>
+            </div>
+            <span class="mono-meta" style="color: var(--accent-vivid);">01 / Identity</span>
+          </figcaption>
+        </figure>
+
+        <!-- Engineering Metrics Strip -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-value">1,000+</div>
+            <div class="metric-label mono-meta">DSA Problems Solved (LeetCode &amp; CodeChef)</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">1,600+</div>
+            <div class="metric-label mono-meta">Contest Rating with 200-Day Coding Streak</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">50K+</div>
+            <div class="metric-label mono-meta">Learners Served via LMS Infrastructure</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">92%</div>
+            <div class="metric-label mono-meta">Text-to-SQL Dynamic Accuracy on PGVector</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02. WHAT I DO (Full-Stack, Distributed Systems, & Applied AI) -->
+    <section id="what-i-do" class="section about" aria-labelledby="about-title">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label mono-meta">02 &bull; What I Do</span>
+          <h2 id="about-title" class="section-title">Core Engineering Capabilities</h2>
+          <p class="section-subtitle">From high-throughput backend services and relational databases to deterministic agent orchestration and fine-tuned models.</p>
+        </div>
+
+        <div class="bento-grid">
+          <article class="bento-card">
+            <span class="bento-index mono-meta">01</span>
+            <h3 class="bento-title">Full-Stack &amp; Scalable Backends</h3>
+            <p class="bento-desc">Architecting robust RESTful and asynchronous APIs using FastAPI, Flask, and Next.js. Engineered backend features for LMS platforms handling 100+ organizations with PostgreSQL, Redis, and message streams.</p>
+            <div class="bento-tags">
+              <span class="pill-tag">FastAPI</span>
+              <span class="pill-tag">Next.js</span>
+              <span class="pill-tag">PostgreSQL</span>
+              <span class="pill-tag">Redis</span>
+              <span class="pill-tag">Kafka</span>
+            </div>
+          </article>
+
+          <article class="bento-card">
+            <span class="bento-index mono-meta">02</span>
+            <h3 class="bento-title">Multi-Agent &amp; Hybrid Retrieval</h3>
+            <p class="bento-desc">Building stateful multi-agent workflows using LangGraph and LlamaIndex. Integrating hybrid search architectures combining BM25 lexical ranking with dense PGVector embeddings and Reciprocal Rank Fusion.</p>
+            <div class="bento-tags">
+              <span class="pill-tag">LangGraph</span>
+              <span class="pill-tag">LlamaIndex</span>
+              <span class="pill-tag">PGVector</span>
+              <span class="pill-tag">Text-to-SQL</span>
+              <span class="pill-tag">BM25 + RRF</span>
+            </div>
+          </article>
+
+          <article class="bento-card">
+            <span class="bento-index mono-meta">03</span>
+            <h3 class="bento-title">Cloud Infrastructure &amp; MLOps</h3>
+            <p class="bento-desc">Deploying containerized microservices across AWS, GCP, and Azure with Docker and Kubernetes. Fine-tuning models with 4-bit QLoRA and PEFT on PyTorch for efficient domain-specific inference.</p>
+            <div class="bento-tags">
+              <span class="pill-tag">Docker</span>
+              <span class="pill-tag">Kubernetes</span>
+              <span class="pill-tag">AWS / GCP / Azure</span>
+              <span class="pill-tag">PyTorch</span>
+              <span class="pill-tag">QLoRA / PEFT</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03. PROJECTS (Selected Work) -->
+    <section id="work" class="section work" aria-labelledby="work-title">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label mono-meta">03 &bull; Projects</span>
+          <h2 id="work-title" class="section-title">Production Systems and Implementations</h2>
+          <p class="section-subtitle">Verifiable repositories, live deployments, and architectural breakdowns.</p>
+        </div>
+
+        <article class="flagship-card">
+          <span class="flagship-badge mono-meta">Flagship System</span>
+          <h3 id="flagship-title" class="project-title">CFOBuddy</h3>
+          <p class="project-desc">Agentic financial co-pilot for CFO workflows. Ingests financial statements and ledgers, runs autonomous Text-to-SQL reconciliation across 4 specialized agents, and renders interactive variance charts with sub-second latency.</p>
+          <span class="project-tech mono-meta">FastAPI &middot; Next.js &middot; LangGraph &middot; LlamaIndex &middot; PostgreSQL (PGVector) &middot; Groq</span>
+          <div class="project-actions">
+            <a href="https://cfobuddy.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Launch Live App</a>
+            <a href="https://github.com/caffeicsatyam/cfobuddy" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Inspect Repository</a>
+            <button type="button" class="btn btn-secondary open-modal-btn" data-project-id="cfobuddy">View Architecture</button>
+          </div>
+        </article>
+
+        <div class="project-grid">
+          <article class="project-card">
+            <span class="project-category mono-meta">Clinical AI &amp; Fine-Tuning</span>
+            <h3 class="project-title">Radiology Reporting Assistant</h3>
+            <p class="project-desc">Template-aware clinical LLM fine-tuned using QLoRA and supervised fine-tuning (SFT) on Qwen2.5-3B-Instruct to convert dictations into structured reports, reducing mean RES by 54.99%.</p>
+            <span class="project-tech mono-meta">Python &middot; PyTorch &middot; Hugging Face &middot; PEFT / QLoRA &middot; Gradio</span>
+            <div class="project-actions">
+              <button type="button" class="btn btn-secondary open-modal-btn" data-project-id="radiology">Inspect Details</button>
+              <a href="https://github.com/caffeicsatyam/radiology-reporting-harness" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
+              <a href="https://huggingface.co/caffeic/qwen2.5-3b-radiology-lora" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Model</a>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <span class="project-category mono-meta">Search &amp; Hybrid Retrieval</span>
+            <h3 class="project-title">AssessQ</h3>
+            <p class="project-desc">Assessment recommendation engine combining BM25 lexical retrieval with dense embeddings and Reciprocal Rank Fusion (RRF), achieving 0.90 Recall@5 across technical evaluations.</p>
+            <span class="project-tech mono-meta">Python &middot; ChromaDB &middot; Sentence-Transformers &middot; LangChain &middot; Streamlit</span>
+            <div class="project-actions">
+              <button type="button" class="btn btn-secondary open-modal-btn" data-project-id="assessq">Inspect Details</button>
+              <a href="https://github.com/caffeicsatyam/AssessQ" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
+              <a href="https://assessq.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Live App</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04. CONTACT -->
+    <section id="contact" class="section contact" aria-labelledby="contact-title">
+      <div class="container">
+        <div class="contact-card">
+          <span class="section-label mono-meta">04 &bull; Contact</span>
+          <h2 id="contact-title" class="section-title" style="margin-top: 0.35rem; margin-bottom: 0.75rem;">Let's Build Something Real</h2>
+          <p class="contact-summary">Open to Software Engineering roles, full-stack backend systems, and applied AI infrastructure collaborations.</p>
+          <div class="contact-links">
+            <a href="https://github.com/caffeicsatyam" target="_blank" rel="noopener noreferrer" class="btn btn-primary">GitHub (@caffeicsatyam)</a>
+            <a href="https://www.linkedin.com/in/satyamchaturvedi0237" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">LinkedIn</a>
+            <a href="https://leetcode.com/knightmen" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">LeetCode</a>
+            <button type="button" class="btn btn-secondary" id="copy-email-btn">Copy Email Address</button>
+            <a href="assets/Satyam_Chaturvedi_Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Download Resume</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-copy">Satyam Chaturvedi &copy; 2026</div>
+        <div class="footer-note mono-meta">Cupertino Daylight &middot; Engineered in India</div>
+      </div>
+    </div>
+  </footer>
+
+  <div id="project-modal-overlay" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-dialog">
+      <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="Close project modal">&times;</button>
+      <h3 id="modal-title" class="modal-title"></h3>
+      <p id="modal-desc" class="modal-desc"></p>
+      <div class="modal-tech">
+        <span class="modal-tech-label mono-meta">Technology Stack</span>
+        <div id="modal-tech" class="mono-meta"></div>
+      </div>
+      <div class="modal-highlights">
+        <span class="modal-highlights-label mono-meta">Engineering Highlights</span>
+        <ul id="modal-highlights"></ul>
+      </div>
+      <div class="modal-actions">
+        <a id="modal-github-link" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View Repository on GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/data.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
