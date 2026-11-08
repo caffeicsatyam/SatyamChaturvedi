@@ -130,6 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const menuToggleBtn = document.getElementById("menu-toggle");
   const mainNavigation = document.getElementById("main-navigation");
+  const siteHeader = document.querySelector(".site-header");
 
   function closeMenu() {
     if (!menuToggleBtn || !mainNavigation) return;
@@ -150,6 +151,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") closeMenu();
+    });
+  }
+
+  const compactHeaderQuery = window.matchMedia("(max-width: 680px)");
+  if (siteHeader) {
+    let previousScrollY = window.scrollY;
+
+    window.addEventListener("scroll", () => {
+      if (!compactHeaderQuery.matches) return;
+      const currentScrollY = window.scrollY;
+      const scrollDelta = currentScrollY - previousScrollY;
+
+      if (currentScrollY <= 24 || scrollDelta < -4) {
+        siteHeader.classList.remove("is-compact");
+      } else if (scrollDelta > 4 && currentScrollY > 80) {
+        siteHeader.classList.add("is-compact");
+      }
+
+      previousScrollY = currentScrollY;
+    }, { passive: true });
+
+    compactHeaderQuery.addEventListener("change", () => {
+      siteHeader.classList.remove("is-compact");
+      previousScrollY = window.scrollY;
+    });
+
+    siteHeader.addEventListener("click", (event) => {
+      if (!siteHeader.classList.contains("is-compact")) return;
+      if (event.target instanceof Element && event.target.closest(".brand-link")) {
+        event.preventDefault();
+      }
+      siteHeader.classList.remove("is-compact");
+    });
+
+    document.addEventListener("click", () => {
+      if (compactHeaderQuery.matches) siteHeader.classList.remove("is-compact");
     });
   }
 
